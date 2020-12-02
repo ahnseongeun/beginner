@@ -42,8 +42,11 @@ public class HelloController {
         return hello;
     }
 
+
+
     static class Hello{
         private String name;
+        private String test; //get/set 자동 생성 alt+insert
 
         public String getName(){
             return name;
