@@ -1,6 +1,7 @@
 package com.inflearnbeginner.beginner.repository;
 
 import com.inflearnbeginner.beginner.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 

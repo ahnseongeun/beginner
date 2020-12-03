@@ -3,6 +3,8 @@ package com.inflearnbeginner.beginner.service;
 import com.inflearnbeginner.beginner.domain.Member;
 import com.inflearnbeginner.beginner.repository.MemberRepository;
 import com.inflearnbeginner.beginner.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +13,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Autowired //새로 생성하는 것이 아니라 외부에서 넣어주는 것을 dependency Injection / DI
     public MemberService(MemberRepository memberRepository){
         this.memberRepository=memberRepository;
     }
