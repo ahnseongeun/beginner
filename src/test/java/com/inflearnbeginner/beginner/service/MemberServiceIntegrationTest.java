@@ -1,37 +1,41 @@
 package com.inflearnbeginner.beginner.service;
 
 import com.inflearnbeginner.beginner.domain.Member;
+import com.inflearnbeginner.beginner.repository.MemberRepository;
 import com.inflearnbeginner.beginner.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-//스프링을 이용한 테스트가 아니라 직접 레포지토리 객체를 생성하고 Service를 테스트 하는 방법
-//이렇게 순수하게 자바 코드로 하는 것을 단위 테스트 -> 훨씬 좋은 테스트 이다. -> 통합 테스트는 시간도 오래 걸린다.
-class MemberServiceTest {
+/*
+실제 컨테이너에 있는 Bean들을 가져와서 ServiceTest하는 방법
+//이렇게 Spring container를 이용해서 Test하는 것을 통합테스트라고 한다.
+ */
 
+//SpringbootTest를 사용하는 이유는 스프링 컨테이너와 테스트를 함께 실행한다.
+@SpringBootTest
+//@Transactional을 사용하는 이유는 Test에서 실제로 DB에 데이터를 저장하지 않고 롤백할때 사용한다.
+//하지만 실제 Service에서 사용하면 그냥 commit된다.
+@Transactional
+class MemberServiceIntegrationTest {
+
+
+    @Autowired
     MemberService memberService;
-    MemoryMemberRepository memberRepository;
 
-    @BeforeEach
-    public void beforeEach(){ //새로 생성하는 것이 아니라 외부에서 넣어주는 것을 dependency Injection / DI
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
+    @Autowired
+    MemberRepository memberRepository;
 
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-    }
-
-    //given -> when -> then이 기본이다.
     @Test
     public void join() {
         Member member=new Member();
-        member.setName("testUser");
+        member.setName("testuser");
 
         Long saveId=memberService.join(member);
 
