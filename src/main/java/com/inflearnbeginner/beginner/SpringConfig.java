@@ -1,5 +1,6 @@
 package com.inflearnbeginner.beginner;
 
+import com.inflearnbeginner.beginner.aop.TimeTraceAop;
 import com.inflearnbeginner.beginner.repository.*;
 import com.inflearnbeginner.beginner.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class SpringConfig {
     public MemberService memberService(){
         return new MemberService(memberRepository);
     }
+
+//    @Bean
+//    public TimeTraceAop timeTraceAop(){
+//        return new TimeTraceAop();
+//    }
 
     /*
     여기서 중요한 부부은 Interface로 구현한 MemberRepository를

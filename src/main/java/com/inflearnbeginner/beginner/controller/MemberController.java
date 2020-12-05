@@ -18,6 +18,10 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+
+        //AOP가 적용이 되면 실제 Service의 복제가 찍히는 것을 알수 있다.
+        //joinPoint.proceed()가 호출 되면 그때 진짜 Service가 호출된다.
+        System.out.println("memberService = " + memberService.getClass());
     }
 
     @GetMapping("/members/new") //회원가입

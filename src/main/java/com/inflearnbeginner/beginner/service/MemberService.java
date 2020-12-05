@@ -3,6 +3,7 @@ package com.inflearnbeginner.beginner.service;
 import com.inflearnbeginner.beginner.domain.Member;
 import com.inflearnbeginner.beginner.repository.MemberRepository;
 import com.inflearnbeginner.beginner.repository.MemoryMemberRepository;
+import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +32,19 @@ public class MemberService {
 
     /*
     전체 회원 조회
+    Spring의 AOP가 없다면 일일이 시간을 찍어줘야하지만 Spring의 AOP를 이용해서 전체 시간을 한번에 제어 할수 있다.
+    일일이 시간을 출력하는 비지니스 로직을 나타낸 것이고 findAll()이라는 한줄의 코드가 엄청 길어진 것을 볼수 있다.
      */
     public List<Member> findMembers(){
-        return memberRepository.findAll();
+
+        long start = System.currentTimeMillis();
+        try{
+            return memberRepository.findAll();
+        }finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("findMembers = "+timeMs+"ms");
+        }
     }
 
     public Optional<Member> findOne(Long id){
